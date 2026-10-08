@@ -10,22 +10,30 @@
     main { max-width: 420px; padding: 28px; text-align: center; }
     h1 { margin: 0 0 8px; font-size: 20px; letter-spacing: 0; }
     p { margin: 0; color: #666b73; line-height: 1.5; }
+    a { display: inline-flex; align-items: center; justify-content: center; margin-top: 20px; min-height: 42px; padding: 0 18px; border-radius: 9px; background: #49777e; color: white; font-size: 14px; font-weight: 600; text-decoration: none; }
+    a:hover { background: #3f686e; }
+    [hidden] { display: none; }
   </style>
 </head>
 <body>
   <main>
     <h1>Returning to the app</h1>
     <p id="status">Completing ORCID sign-in...</p>
+    <a id="open-app" href="#" hidden>Open Research Publication Tracker</a>
   </main>
   <script>
     const payload = window.location.hash.slice(1);
     const status = document.getElementById("status");
+    const openApp = document.getElementById("open-app");
 
     if (payload) {
-      window.location.replace(`researchpublicationtracker://orcid-callback?${payload}`);
-      window.setTimeout(() => {
-        status.textContent = "You can return to Research Publication Tracker.";
-      }, 1200);
+      const callbackURL = `researchpublicationtracker://orcid-callback?${payload}`;
+      openApp.href = callbackURL;
+      openApp.hidden = false;
+      status.textContent = "ORCID sign-in is complete. Click below to return to the app.";
+      openApp.addEventListener("click", () => {
+        status.textContent = "Opening Research Publication Tracker...";
+      });
     } else {
       status.textContent = "ORCID did not return sign-in information. Please try again from the app.";
     }
