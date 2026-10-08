@@ -19,7 +19,7 @@
   <main>
     <h1>Returning to the app</h1>
     <p id="status">Completing ORCID sign-in...</p>
-    <a id="open-app" href="#" hidden>Open Research Publication Tracker</a>
+    <a id="open-app" href="#" hidden>Complete ORCID Sign-In</a>
   </main>
   <script>
     const payload = window.location.hash.slice(1);
@@ -27,12 +27,12 @@
     const openApp = document.getElementById("open-app");
 
     if (payload) {
-      const callbackURL = `researchpublicationtracker://orcid-callback?${payload}`;
+      const callbackURL = `http://127.0.0.1:47832/orcid-callback?${payload}`;
       openApp.href = callbackURL;
       openApp.hidden = false;
-      status.textContent = "ORCID sign-in is complete. Click below to return to the app.";
+      status.textContent = "ORCID sign-in is complete. Click below to send it securely to the running app.";
       openApp.addEventListener("click", () => {
-        status.textContent = "Opening Research Publication Tracker...";
+        status.textContent = "Completing sign-in in Research Publication Tracker...";
       });
     } else {
       status.textContent = "ORCID did not return sign-in information. Please try again from the app.";
